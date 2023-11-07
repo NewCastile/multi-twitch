@@ -13,7 +13,7 @@ const TwitchChat = ({
     <iframe
       height={height ?? 500}
       id={"twitch-chat-embed"}
-      src={`https://www.twitch.tv/embed/${broadcasterLogin}/chat?parent=localhost`}
+      src={`https://www.twitch.tv/embed/${broadcasterLogin}/chat?parent=${process.env.NEXT_PUBLIC_EMBEDDED_IFRAME_PARENT}`}
       width={width ?? "100%"}
     />
   );

@@ -48,10 +48,13 @@ export const saveNewAccessToken = async ({
   newAccessToken: string;
   newRefreshToken: string;
 }): Promise<WithId<Account> | ApiErrorResponse> => {
-  const response = await fetch(`http://localhost:3000/api/account/accessToken/update`, {
-    method: "POST",
-    body: JSON.stringify({ accountId, newAccessToken, newRefreshToken }),
-  });
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_API_BASEPATH}/api/account/accessToken/update`,
+    {
+      method: "POST",
+      body: JSON.stringify({ accountId, newAccessToken, newRefreshToken }),
+    },
+  );
   const data = await response.json();
 
   return data;

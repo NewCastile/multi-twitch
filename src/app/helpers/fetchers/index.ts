@@ -19,9 +19,9 @@ export const fetchUserFollowedChannels = async (
   first?: number,
 ): Promise<ApiErrorResponse | FollowedChannelsResponse> => {
   const response = await fetch(
-    `http://localhost:3000/api/search/channels/followed/${userId}?accessToken=${accessToken}&first=${
-      first ?? "100"
-    }`,
+    `http://${
+      process.env.NEXT_PUBLIC_API_BASEPATH
+    }/api/search/channels/followed/${userId}?accessToken=${accessToken}&first=${first ?? "100"}`,
   );
 
   const data = await response.json();
@@ -35,9 +35,9 @@ export const fetchUserFollowedStreams = async (
   first?: number,
 ): Promise<ApiErrorResponse | FollowedStreamsResponse> => {
   const response = await fetch(
-    `http://localhost:3000/api/search/streams/followed/${userId}?accessToken=${accessToken}&first=${
-      first ?? "100"
-    }`,
+    `http://${
+      process.env.NEXT_PUBLIC_API_BASEPATH
+    }/api/search/streams/followed/${userId}?accessToken=${accessToken}&first=${first ?? "100"}`,
   );
   const data = await response.json();
 
@@ -45,7 +45,9 @@ export const fetchUserFollowedStreams = async (
 };
 
 export const fetchUser = async (username: string): Promise<ApiErrorResponse | WithId<User>> => {
-  const response = await fetch(`http://localhost:3000/api/user/${username}`);
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_API_BASEPATH}/api/user/${username}`,
+  );
   const data = await response.json();
 
   return data;
@@ -54,7 +56,9 @@ export const fetchUser = async (username: string): Promise<ApiErrorResponse | Wi
 export const fetchSessionByUserId = async (
   userId: string,
 ): Promise<ApiErrorResponse | WithId<SessionDocument>> => {
-  const response = await fetch(`http://localhost:3000/api/session/user/${userId}`);
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_API_BASEPATH}/api/session/user/${userId}`,
+  );
   const data = await response.json();
 
   return data;
@@ -63,7 +67,9 @@ export const fetchSessionByUserId = async (
 export const fetchAccountBySessionToken = async (
   sessionToken: string,
 ): Promise<ApiErrorResponse | WithId<Account>> => {
-  const response = await fetch(`http://localhost:3000/api/account/sessionToken/${sessionToken}`);
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_API_BASEPATH}/api/account/sessionToken/${sessionToken}`,
+  );
   const data = await response.json();
 
   return data;
@@ -72,7 +78,9 @@ export const fetchAccountBySessionToken = async (
 export const fetchAccountByAccessToken = async (
   accessToken: string,
 ): Promise<ApiErrorResponse | WithId<Account>> => {
-  const response = await fetch(`http://localhost:3000/api/account/accessToken/${accessToken}`);
+  const response = await fetch(
+    `http://${process.env.NEXT_PUBLIC_API_BASEPATH}/api/account/accessToken/${accessToken}`,
+  );
   const data = await response.json();
 
   return data;
