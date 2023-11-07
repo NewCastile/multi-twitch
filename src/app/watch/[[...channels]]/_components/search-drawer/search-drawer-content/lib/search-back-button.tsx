@@ -1,3 +1,4 @@
+"use client";
 import { TriangleUpIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
 

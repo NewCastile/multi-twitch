@@ -1,3 +1,4 @@
+"use client";
 import { HStack, Text, VStack } from "@chakra-ui/react";
 
 import { FollowedChannelItemProps } from "@/app/types";

@@ -1,3 +1,4 @@
+"use client";
 import { Search2Icon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { ChangeEvent, KeyboardEvent } from "react";

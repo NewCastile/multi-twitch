@@ -1,3 +1,4 @@
+"use client";
 import { Image as ChakraImage, Circle, HStack, Text, VStack } from "@chakra-ui/react";
 
 import { FollowedStreamItemProps } from "@/app/types";
