@@ -1,6 +1,5 @@
 import { WithId } from "mongodb";
 import { RequestInit } from "next/dist/server/web/spec-extension/request";
-import { NextResponse } from "next/server";
 
 import { ERROR_STATUS } from "@/app/constants";
 import { Account, ApiErrorResponse, RefreshTokenData, RefreshTokenResponse } from "@/app/types";
@@ -92,7 +91,7 @@ const refreshAccessToken = async (
 };
 
 //retry request with new access token
-export const retryTwitchAPIRequest = async ({
+export const retryTwitchAPIRequest = async <T>({
   requestMethod,
   accessToken,
   requestUrl,
@@ -100,15 +99,15 @@ export const retryTwitchAPIRequest = async ({
   requestUrl: string;
   accessToken: string;
   requestMethod: RequestInit["method"];
-}) => {
+}): Promise<T | ApiErrorResponse> => {
   const refreshAccessTokenResponse = await refreshAccessToken(accessToken);
 
   if (!isRefreshTokenResponse(refreshAccessTokenResponse)) {
-    return NextResponse.json({
+    return {
       message: refreshAccessTokenResponse.message,
       status: refreshAccessTokenResponse.status,
       statusText: refreshAccessTokenResponse.statusText,
-    });
+    };
   }
 
   const {
@@ -126,12 +125,12 @@ export const retryTwitchAPIRequest = async ({
   const retryResponseData = await retryResponse.json();
 
   if (retryResponse.ok) {
-    return NextResponse.json(retryResponseData);
+    return retryResponseData as T;
   } else {
-    return NextResponse.json({
+    return {
       message: `${retryResponseData.error}: ${retryResponseData.message}`,
       status: retryResponse.status,
       statusText: retryResponse.statusText,
-    });
+    };
   }
 };

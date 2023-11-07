@@ -13,35 +13,68 @@ import {
   User,
 } from "@/app/types";
 
+import { retryTwitchAPIRequest } from "../access-token-refresh";
+
 export const fetchUserFollowedChannels = async (
   userId: string,
   accessToken: string,
-  first?: number,
 ): Promise<ApiErrorResponse | FollowedChannelsResponse> => {
-  const response = await fetch(
-    `http://${
-      process.env.NEXT_PUBLIC_API_BASEPATH
-    }/api/search/channels/followed/${userId}?accessToken=${accessToken}&first=${first ?? "100"}`,
+  const twitchAPIRequestURL = `https://api.twitch.tv/helix/channels/followed?user_id=${userId}&first=100`;
+
+  const response = await fetchTwitchApiEndpoint<FollowedChannelsResponse>(
+    twitchAPIRequestURL,
+    accessToken,
   );
 
-  const data = await response.json();
-
-  return data;
+  return response;
 };
 
 export const fetchUserFollowedStreams = async (
   userId: string,
   accessToken: string,
-  first?: number,
 ): Promise<ApiErrorResponse | FollowedStreamsResponse> => {
-  const response = await fetch(
-    `http://${
-      process.env.NEXT_PUBLIC_API_BASEPATH
-    }/api/search/streams/followed/${userId}?accessToken=${accessToken}&first=${first ?? "100"}`,
-  );
-  const data = await response.json();
+  const twitchAPIRequestURL = `https://api.twitch.tv/helix/streams/followed?user_id=${userId}&first=100`;
 
-  return data;
+  const response = await fetchTwitchApiEndpoint<FollowedStreamsResponse>(
+    twitchAPIRequestURL,
+    accessToken,
+  );
+
+  return response;
+};
+
+const fetchTwitchApiEndpoint = async <T>(
+  url: string,
+  accessToken: string,
+): Promise<T | ApiErrorResponse> => {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Client-Id": `${process.env.TWITCH_CLIENT_ID}`,
+    },
+  });
+
+  const responseData = await response.json();
+
+  if (response.statusText === ERROR_STATUS.unauthorized.statusText) {
+    //search retry with new access token
+    await retryTwitchAPIRequest<T>({
+      accessToken,
+      requestUrl: url,
+      requestMethod: "GET",
+    });
+  }
+
+  if (response.ok) {
+    return responseData as T;
+  } else {
+    return {
+      message: `${responseData.error}: ${responseData.message}`,
+      status: response.status,
+      statusText: response.statusText,
+    };
+  }
 };
 
 export const fetchUser = async (username: string): Promise<ApiErrorResponse | WithId<User>> => {
