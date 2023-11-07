@@ -2,7 +2,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Center, Link as ChakraLink, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 
 import { useAppSelector } from "@/app/store";
 
@@ -13,21 +12,15 @@ const AddBroadcastLink = ({
   broadcasterLogin: string;
   iconOnly?: boolean;
 }) => {
-  const maxReached = useAppSelector((state) => state.broadcasts.maxReached);
+  const { broadcasts, maxReached } = useAppSelector((state) => state.broadcasts);
 
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const currentUrl = `${pathname}?${searchParams}`;
-
-  const { broadcasts } = useAppSelector((state) => state.broadcasts);
   const channels = broadcasts.map((broadcast) => broadcast.broadcaster_login);
   const newChannels = channels.join("/").concat(`/${broadcasterLogin}`);
   const isNewChannel = channels.every((channel) => channel !== broadcasterLogin);
 
-  const newUrl = `/watch/${newChannels}`;
-  const linkHref = isNewChannel ? newUrl : currentUrl;
+  const linkHref = `/watch/${newChannels}`;
 
-  if (maxReached) return null;
+  if (maxReached || !isNewChannel) return null;
 
   return (
     <Center
