@@ -14,16 +14,24 @@ type SearchQueryResult = SearchChannelResponse | ApiErrorResponse;
 
 export const searchApi = createApi({
   reducerPath: "searchApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.twitch.tv/helix/search" }),
   tagTypes: ["channel", "searchError", "error"],
   endpoints: (builder) => ({
     searchBroadcast: builder.query<SearchQueryResult, SearchQueryArgs>({
-      query: (arg) => {
-        const { broadcasterName, accessToken, liveOnly, after } = arg;
-        const afterParamValue = after ? `&after=${after}` : "";
+      query: (args) => {
+        const { broadcasterName, accessToken, liveOnly, after } = args;
+        const afterParam = after ? `&after=${after}` : "";
 
-        return `search/channels/${broadcasterName}?accessToken=${accessToken}&liveOnly=${liveOnly}${afterParamValue}`;
+        return {
+          url: `/channels?query=${broadcasterName}&live_only=${liveOnly}${afterParam}`,
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Client-Id": `${process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID}`,
+          },
+        };
       },
+
       providesTags: (result, error, search) => {
         if (!result || error) return [{ type: "error", error }];
         if (!isSearchChannelsResponse(result)) {
