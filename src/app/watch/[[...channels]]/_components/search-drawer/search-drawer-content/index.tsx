@@ -29,7 +29,7 @@ const SearchDrawerContent = () => {
     useLazySearchBroadcastQuery();
   const [value, setValue] = useState("");
   const [liveOnly, setLiveOnly] = useState(false);
-  const isFirstPage = pageToken === SEARCH_ITEMS_PER_PAGE;
+  const onFirstPage = pageToken === SEARCH_ITEMS_PER_PAGE;
   const hasPagination = (data?: SearchChannelResponse | ApiErrorResponse) => {
     if (!data) return false;
     if ("message" in data) return false;
@@ -135,20 +135,15 @@ const SearchDrawerContent = () => {
           })}
         </VStack>
       )}
-      <VStack>
+      <VStack w={"full"}>
         {isLoading || isFetching ? (
           <Spinner />
-        ) : (
-          <HStack>
-            <SearchBackButton
-              display={!pageToken || isFirstPage ? "none" : "block"}
-              onClickHandler={() => dispatch(goToPrevPage())}
-            />
-            {pageToken && hasPagination(data) && (
-              <SearchNextButton onClickHandler={nextButtonOnClickHandler} />
-            )}
+        ) : pageToken && hasPagination(data) ? (
+          <HStack align={"center"} justify={"space-between"} w={"full"}>
+            <SearchNextButton onClickHandler={nextButtonOnClickHandler} />
+            {!onFirstPage && <SearchBackButton onClickHandler={() => dispatch(goToPrevPage())} />}
           </HStack>
-        )}
+        ) : null}
       </VStack>
     </VStack>
   );

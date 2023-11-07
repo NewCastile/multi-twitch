@@ -1,5 +1,5 @@
 "use client";
-import { ArrowDownIcon, ArrowUpIcon, CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   HStack,
@@ -9,8 +9,9 @@ import {
   VStack,
   useOutsideClick,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
+import { FOLLOWED_ITEMS_PER_PAGE } from "@/app/constants";
 import { isFollowedChannel } from "@/app/helpers/type-guards";
 import useSearchFollowed from "@/app/hooks/use-search-followed";
 import useSelectBroadcasts from "@/app/hooks/use-select-broadcasts";
@@ -49,7 +50,6 @@ const FollowedDrawerContent = () => {
     pageToken,
     shownFollowed,
     controlButtonsHandler: { nextPageButtonOnClickHandler, prevPageButtonOnClickHandler },
-    reset,
   } = useSearchFollowed({ query, liveOnly });
 
   const getFollowedBasicInfo = (followed: FollowedEntity) => {
@@ -61,11 +61,6 @@ const FollowedDrawerContent = () => {
 
     return { broadcaster_login, broadcaster_name };
   };
-
-  useEffect(() => {
-    reset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <VStack className={"content"} fontWeight={"bold"} h={"full"} w={"full"}>
@@ -146,18 +141,20 @@ const FollowedDrawerContent = () => {
             );
           })}
         </VStack>
-        <HStack>
-          {pageToken > 7 && (
-            <Button size={"md"} variant={"monokaiRed"} onClick={prevPageButtonOnClickHandler}>
-              <ArrowUpIcon />
-            </Button>
-          )}
-          {shownFollowed.length < followeds.length && (
-            <Button size={"md"} variant={"monokaiRed"} onClick={nextPageButtonOnClickHandler}>
-              <ArrowDownIcon />
-            </Button>
-          )}
-        </HStack>
+        {filteredFolloweds.length && (
+          <HStack align={"center"} justify={"space-between"} w={"full"}>
+            {shownFollowed.length < followeds.length && (
+              <Button size={"sm"} variant={"monokaiRed"} onClick={nextPageButtonOnClickHandler}>
+                Show more
+              </Button>
+            )}
+            {pageToken > FOLLOWED_ITEMS_PER_PAGE && (
+              <Button size={"sm"} variant={"monokaiRed"} onClick={prevPageButtonOnClickHandler}>
+                Show less
+              </Button>
+            )}
+          </HStack>
+        )}
       </VStack>
     </VStack>
   );
