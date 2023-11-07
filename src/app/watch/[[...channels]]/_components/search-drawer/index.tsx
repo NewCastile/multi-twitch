@@ -5,7 +5,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -24,16 +23,11 @@ const SearchDrawer = () => {
       </Button>
       <Drawer finalFocusRef={btnRef} isOpen={isOpen} placement={"right"} onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent bg={"monokai.bg"} pb={"5"} pt={"20"}>
+        <DrawerContent bg={"monokai.bg"} color={"monokai.white"} pb={"5"} pt={"20"}>
           <DrawerCloseButton />
           <DrawerBody>
             <SearchDrawerContent />
           </DrawerBody>
-          <DrawerFooter>
-            <Button mr={3} variant={"monokaiRed"} onClick={onClose}>
-              Close
-            </Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

@@ -37,10 +37,12 @@ const FollowedStreamItem = ({
       <Text color={"monokai.green.primary"} w={"full"}>
         {title}
       </Text>
-      <Text color={"monokai.yellow"} textAlign={"left"} w={"full"}>
+      <HStack w={"full"}>
         <Circle bg={"red"} display={"inline-block"} mr={"2"} size={"10px"} />
-        {game_name}
-      </Text>
+        <Text color={"monokai.yellow"} textAlign={"left"} w={"full"}>
+          {game_name}
+        </Text>
+      </HStack>
     </VStack>
   );
 };

@@ -5,7 +5,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -29,11 +28,6 @@ const FollowedDrawer = () => {
           <DrawerBody>
             <FollowedDrawerContent />
           </DrawerBody>
-          <DrawerFooter>
-            <Button mr={3} variant={"monokaiRed"} onClick={onClose}>
-              Close
-            </Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

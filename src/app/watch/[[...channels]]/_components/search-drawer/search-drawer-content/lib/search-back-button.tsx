@@ -1,17 +1,10 @@
 "use client";
-import { TriangleUpIcon } from "@chakra-ui/icons";
 import { Button } from "@chakra-ui/react";
 
-const SearchBackButton = ({
-  display,
-  onClickHandler,
-}: {
-  display: string;
-  onClickHandler: () => void;
-}) => {
+const SearchBackButton = ({ onClickHandler }: { onClickHandler: () => void }) => {
   return (
-    <Button display={display} size={"xs"} variant={"monokaiRed"} onClick={onClickHandler}>
-      <TriangleUpIcon />
+    <Button size={"sm"} variant={"monokaiRed"} onClick={onClickHandler}>
+      Show less
     </Button>
   );
 };

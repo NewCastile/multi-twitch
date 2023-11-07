@@ -36,19 +36,21 @@ const SearchChannelResultItem = ({ matchingChannel }: { matchingChannel: SearchC
                 {title}
               </Text>
             )}
-            <Text
-              color={is_live ? "monokai.yellow" : "whiteAlpha.400"}
-              textAlign={"left"}
-              w={"full"}
-            >
+            <HStack w={"full"}>
               <Circle
                 bg={is_live ? "red" : "whiteAlpha.400"}
                 display={"inline-block"}
                 mr={"2"}
                 size={"10px"}
               />
-              {is_live ? game_name : "Offline"}
-            </Text>
+              <Text
+                color={is_live ? "monokai.yellow" : "whiteAlpha.400"}
+                textAlign={"left"}
+                w={"full"}
+              >
+                {is_live ? game_name : "Offline"}
+              </Text>
+            </HStack>
           </VStack>
         </HStack>
         <AddBroadcastLink iconOnly broadcasterLogin={broadcaster_login} />
