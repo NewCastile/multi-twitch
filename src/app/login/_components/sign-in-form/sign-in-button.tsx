@@ -9,11 +9,12 @@ const SignInButton = ({ provider }: { provider: ClientSafeProvider }) => {
       mt={"3"}
       type={"button"}
       variant={"monokaiViolet"}
-      onClick={() =>
+      onClick={(e) => {
+        e.preventDefault();
         signIn(provider.id, {
           callbackUrl: "/watch/knekro/alimentacionchino/jujalag/zackrawrr/werlyb",
-        })
-      }
+        });
+      }}
     >
       Twitch
     </Button>
