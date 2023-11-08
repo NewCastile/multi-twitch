@@ -10,11 +10,11 @@ export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     TwitchProvider({
-      clientId: process.env.TWITCH_CLIENT_ID as string,
+      clientId: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID as string,
       clientSecret: process.env.TWITCH_CLIENT_SECRET as string,
       authorization: {
         params: {
-          client_id: process.env.TWITCH_CLIENT_ID as string,
+          client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID as string,
           scope: "channel:manage:polls channel:read:polls openid user:read:email user:read:follows",
           claims: {
             userinfo: { preferred_username: { essential: true, value: "name" } },
@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
   events: {
     async signIn({ user, profile, isNewUser }) {
       // Updates user information in case it changes between sessions

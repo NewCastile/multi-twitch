@@ -17,7 +17,7 @@ const getRefreshToken = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      client_id: process.env.TWITCH_CLIENT_ID,
+      client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID,
       client_secret: process.env.TWITCH_CLIENT_SECRET,
       grant_type: "refresh_token",
       refresh_token: refreshToken,
@@ -118,7 +118,7 @@ export const retryTwitchAPIRequest = async <T>({
     method: requestMethod,
     headers: {
       Authorization: `Bearer ${newAccessToken}`,
-      "Client-Id": `${process.env.TWITCH_CLIENT_ID}`,
+      "Client-Id": `${process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID}`,
     },
   });
 
