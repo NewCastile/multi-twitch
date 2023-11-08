@@ -1,3 +1,4 @@
+"use client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { SEARCH_ITEMS_PER_PAGE } from "@/app/constants";
