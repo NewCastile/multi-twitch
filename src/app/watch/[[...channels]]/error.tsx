@@ -14,6 +14,7 @@ export default function Error({
     // Log the error to an error reporting service
     // eslint-disable-next-line no-console
     console.error(error);
+    console.error(error.digest);
   }, [error]);
 
   return <UnexpectedErrorView {...{ error, reset }} />;
