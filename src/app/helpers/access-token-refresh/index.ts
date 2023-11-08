@@ -17,8 +17,8 @@ const getRefreshToken = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_TWITCH_CLIENT_SECRET,
+      client_id: process.env.TWITCH_CLIENT_ID,
+      client_secret: process.env.TWITCH_CLIENT_SECRET,
       grant_type: "refresh_token",
       refresh_token: refreshToken,
     }),
