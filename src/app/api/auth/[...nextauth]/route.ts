@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
   providers: [
     TwitchProvider({
       clientId: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID as string,
-      clientSecret: process.env.TWITCH_CLIENT_SECRET as string,
+      clientSecret: process.env.NEXT_PUBLIC_TWITCH_CLIENT_SECRET as string,
       authorization: {
         params: {
           client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID as string,
