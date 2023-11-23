@@ -1,6 +1,6 @@
 import NotFoundView from "@/app/_components/views/not-found-view";
 
-import { ChakraProviders } from "./providers";
+import AuthProviders, { ChakraProviders } from "./providers";
 
 export const metadata = {
   title: "Page Not Found",
@@ -9,7 +9,9 @@ export const metadata = {
 export default function NotFound() {
   return (
     <ChakraProviders>
-      <NotFoundView />
+      <AuthProviders>
+        <NotFoundView />
+      </AuthProviders>
     </ChakraProviders>
   );
 }
