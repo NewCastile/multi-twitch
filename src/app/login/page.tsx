@@ -3,9 +3,11 @@ import { getServerSession } from "next-auth";
 import { getProviders } from "next-auth/react";
 
 import { INITIAL_PAGE_ROUTE } from "@/app/constants";
-import SignInForm from "@/app/login/_components/sign-in-form";
 
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import AuthProviders, { ChakraProviders } from "../providers";
+
+import LoginView from "./_components/views";
 
 export const metadata = {
   title: "My Multi-Twitch - Login",
@@ -19,6 +21,12 @@ export default async function Login() {
   if (session) {
     redirect(INITIAL_PAGE_ROUTE);
   } else {
-    return providers ? <SignInForm provider={providers.twitch} /> : null;
+    return providers ? (
+      <AuthProviders>
+        <ChakraProviders>
+          <LoginView provider={providers.twitch} />
+        </ChakraProviders>
+      </AuthProviders>
+    ) : null;
   }
 }
