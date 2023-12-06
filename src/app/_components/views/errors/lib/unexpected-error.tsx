@@ -1,18 +1,17 @@
 "use client";
-import { Button, Text, VStack } from "@chakra-ui/react";
 
 import { UnexpectedErrorProps } from "@/app/types";
 
 const UnexpectedError = ({ error, reset }: UnexpectedErrorProps) => {
   return (
-    <VStack>
-      <Text>
+    <div className={"flex flex-col items-center justify-center"}>
+      <p>
         {error.name}: {error.message}
-      </Text>
-      <Button variant={"monokaiGreen"} onClick={() => reset()}>
+      </p>
+      <button className={"btn-md btn-monokai-green"} onClick={() => reset()}>
         Try again
-      </Button>
-    </VStack>
+      </button>
+    </div>
   );
 };
 

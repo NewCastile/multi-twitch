@@ -1,6 +1,5 @@
 "use client";
 
-import { Link as ChakraLink, Text, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { signOut, useSession } from "next-auth/react";
 
@@ -10,14 +9,12 @@ const NotFoundView = () => {
   if (status === "unauthenticated") signOut({ callbackUrl: "/login" });
 
   return (
-    <VStack align={"center"} color={"whiteAlpha.700"} h={"100vh"} justify={"center"} w={"100vw"}>
-      <Text as={"h1"} color={"monokai.bg_contrast"} fontSize={"5xl"} fontWeight={"extrabold"}>
-        Page Not Found
-      </Text>
-      <ChakraLink as={NextLink} color={"whiteAlpha.500"} fontSize={"3xl"} href={"/"}>
+    <div className={"flex h-screen w-screen flex-col items-center justify-center text-gray-400"}>
+      <p className={"text-5xl font-extrabold text-monokai-bg-contrast"}>Page Not Found</p>
+      <NextLink className={"text-3xl text-gray-400"} href={"/"}>
         Return to the initial page
-      </ChakraLink>
-    </VStack>
+      </NextLink>
+    </div>
   );
 };
 

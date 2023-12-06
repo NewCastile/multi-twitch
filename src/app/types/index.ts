@@ -1,4 +1,5 @@
 import { ObjectId, WithId } from "mongodb";
+import { SVGAttributes } from "react";
 
 export interface User {
   _id: ObjectId;
@@ -201,3 +202,7 @@ export type SelectedBroadcastsAction =
   | SelectedBroadcastsResetAction
   | SelectedBroadcastsAddAction
   | SelectedBroadcastsRemoveAction;
+
+export interface IconProps {
+  size?: SVGAttributes<SVGSVGElement>["height"];
+}

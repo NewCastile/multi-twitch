@@ -1,26 +1,20 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
-import { Circle, SquareProps } from "@chakra-ui/react";
 
 const CancelSelectController = ({
-  size = "25px",
   onClick,
   children,
 }: {
-  size?: SquareProps["size"];
   onClick?: () => void;
   children: React.ReactNode;
 }) => {
   return (
-    <Circle
-      as={"button"}
-      bg={"inherit"}
-      borderColor={"whiteAlpha.400"}
-      borderWidth={"2px"}
-      size={size}
+    <button
+      className={`rounded-full border-2 border-monokai-bg-contrast bg-inherit p-2`}
       onClick={onClick}
     >
       {children}
-    </Circle>
+    </button>
   );
 };
 

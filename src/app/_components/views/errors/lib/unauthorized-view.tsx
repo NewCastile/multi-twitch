@@ -1,5 +1,4 @@
 "use client";
-import { Text, VStack } from "@chakra-ui/react";
 
 import RefreshPageButton from "@/app/_components/refresh-page-button";
 import { ErrorViewComponentProps } from "@/app/types";
@@ -7,15 +6,15 @@ import SignOutButton from "@/app/watch/[[...channels]]/_components/sign-out-butt
 
 const UnauthorizedView = ({ message, status }: ErrorViewComponentProps) => {
   return (
-    <VStack>
-      <Text>Error: {status}</Text>
-      <Text>{message}</Text>
-      <VStack>
+    <div className={"flex flex-col items-center justify-center"}>
+      <p>Error: {status}</p>
+      <p>{message}</p>
+      <div className={"flex flex-col items-center justify-center"}>
         <RefreshPageButton />
-        <Text>Or</Text>
+        <p>Or</p>
         <SignOutButton />
-      </VStack>
-    </VStack>
+      </div>
+    </div>
   );
 };
 

@@ -1,46 +1,26 @@
-"use client";
-
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
-
 import SignOutButton from "../sign-out-button";
 
 const WatchLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <VStack
-      align={"center"}
-      bg={"monokai.bg"}
-      color={"monokai.white"}
-      fontSize={"sm"}
-      justify={"start"}
-      maxH={"100vh"}
-      minH={"100vh"}
-      overflow={"hidden"}
-      w={"full"}
+    <div
+      className={
+        "flex h-screen w-full flex-col items-center justify-start overflow-hidden bg-monokai-bg text-sm text-monokai-white"
+      }
     >
-      <HStack
-        bg={"monokai.bg_contrast"}
-        borderTop={"8px"}
-        borderTopColor={"monokai.orange"}
-        justify={"space-between"}
-        px={"5"}
-        py={"3"}
-        w={"full"}
+      <div
+        className={
+          "flex w-full flex-row items-center justify-between border-t-8 border-t-monokai-orange bg-monokai-bg-contrast px-5 py-3"
+        }
       >
-        <Box>
-          <Text
-            casing={"uppercase"}
-            color={"monokai.white"}
-            fontFamily={"monospace"}
-            fontSize={"3xl"}
-            fontWeight={"black"}
-          >
+        <div>
+          <p className={"font-mono text-3xl font-black uppercase text-monokai-white"}>
             My Multi-Twitch
-          </Text>
-        </Box>
-        <SignOutButton fontSize={"md"} fontWeight={"extrabold"} size={"sm"} />
-      </HStack>
+          </p>
+        </div>
+        <SignOutButton />
+      </div>
       {children}
-    </VStack>
+    </div>
   );
 };
 

@@ -1,21 +1,19 @@
 "use client";
-import { Button, ButtonProps } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 
-const SignOutButton = (props: ButtonProps) => {
+const SignOutButton = () => {
   return (
-    <Button
-      {...props}
-      type={"button"}
-      variant={"monokaiRed"}
-      onClick={() =>
+    <button
+      className={"btn-md btn-monokai-red"}
+      onClick={(e) => {
+        e.preventDefault();
         signOut({
           callbackUrl: "/login",
-        })
-      }
+        });
+      }}
     >
       Log out
-    </Button>
+    </button>
   );
 };
 

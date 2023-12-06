@@ -1,5 +1,6 @@
 "use client";
-import { Image as ChakraImage, Circle, HStack, Text, VStack } from "@chakra-ui/react";
+
+import NextImage from "next/image";
 
 import { SearchChannel } from "@/app/types";
 
@@ -10,52 +11,47 @@ const SearchChannelResultItem = ({ matchingChannel }: { matchingChannel: SearchC
     matchingChannel;
 
   return (
-    <VStack as={"li"} fontSize={"xs"} fontWeight={"medium"} textTransform={"uppercase"} w={"full"}>
-      <HStack align={"center"} justify={"space-between"} w={"full"}>
-        <HStack spacing={"6"} w={"full"}>
-          <ChakraImage
-            alt={"profile-picture"}
-            borderRadius={"50%"}
-            height={50}
-            src={thumbnail_url}
-            width={50}
-          />
-          <VStack align={"start"} justify={"center"} w={"18ch"}>
-            <Text
-              casing={"none"}
-              color={is_live ? "inherit" : "whiteAlpha.400"}
-              fontSize={"sm"}
-              fontWeight={"black"}
-              textAlign={"justify"}
-              w={"full"}
-            >
-              {display_name}
-            </Text>
-            {is_live && (
-              <Text color={"monokai.green.primary"} w={"full"}>
-                {title}
-              </Text>
-            )}
-            <HStack w={"full"}>
-              <Circle
-                bg={is_live ? "red" : "whiteAlpha.400"}
-                display={"inline-block"}
-                mr={"2"}
-                size={"10px"}
-              />
-              <Text
-                color={is_live ? "monokai.yellow" : "whiteAlpha.400"}
-                textAlign={"left"}
-                w={"full"}
-              >
-                {is_live ? game_name : "Offline"}
-              </Text>
-            </HStack>
-          </VStack>
-        </HStack>
-        <AddBroadcastLink iconOnly broadcasterLogin={broadcaster_login} />
-      </HStack>
-    </VStack>
+    <li
+      className={
+        "flex w-full flex-row items-center justify-center space-x-4 px-3 py-6 text-xs font-medium uppercase"
+      }
+    >
+      <NextImage
+        alt={"profile-picture"}
+        className={"rounded-md"}
+        height={50}
+        src={thumbnail_url}
+        width={50}
+      />
+      <div className={"flex w-full flex-col items-start justify-start space-y-2"}>
+        {is_live ? (
+          <p className={"w-[20ch] break-words text-justify text-sm font-black text-inherit"}>
+            {display_name}
+          </p>
+        ) : (
+          <p
+            className={
+              "w-[20ch] break-words text-justify text-sm font-black text-monokai-bg-contrast"
+            }
+          >
+            {display_name}
+          </p>
+        )}
+        {is_live && <p className={"w-full text-monokai-green-primary"}>{title}</p>}
+        {is_live ? (
+          <p className={"w-full text-left text-monokai-yellow"}>
+            <span className={"mr-2 inline-block h-2.5 w-2.5 rounded-full bg-monokai-red-light"} />
+            {game_name}
+          </p>
+        ) : (
+          <p className={"w-full text-left text-monokai-bg-contrast"}>
+            <span className={"mr-2 inline-block h-2.5 w-2.5 rounded-full bg-monokai-bg-contrast"} />
+            Offline
+          </p>
+        )}
+      </div>
+      <AddBroadcastLink {...{ broadcasterLogin: broadcaster_login, iconOnly: true }} />
+    </li>
   );
 };
 

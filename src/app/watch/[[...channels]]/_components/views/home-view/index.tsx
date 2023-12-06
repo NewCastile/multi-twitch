@@ -1,6 +1,5 @@
 "use client";
 
-import { Link as ChakraLink, HStack, Text, VStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 import GithubIcon from "@/app/_components/icons/github-icon";
@@ -10,27 +9,34 @@ import StreamsGrid from "./lib/stream-grid";
 
 const HomeView = () => {
   return (
-    <VStack
-      color={"monokai.white"}
-      overflowX={"hidden"}
-      overflowY={"auto"}
-      spacing={"6"}
-      w={"100vw"}
+    <div
+      className={
+        "flex w-screen flex-col space-y-6 overflow-y-auto overflow-x-hidden text-monokai-white"
+      }
     >
-      <HStack align={"start"} justify={"start"} position={"relative"} px={"6"} w={"100vw"}>
+      <div className={"relative flex w-screen flex-row items-start justify-center px-6 py-4"}>
         <StreamsGrid />
         <ChatTabs />
-      </HStack>
-      <HStack color={"monokai.contrast"} fontSize={"lg"} fontWeight={"bold"} py={"4"}>
-        <Text>
+      </div>
+      <div
+        className={
+          "flex flex-col items-center justify-center py-4 text-lg font-bold text-monokai-bg-contrast"
+        }
+      >
+        <p className={"text-center"}>
           Made by{" "}
-          <ChakraLink as={NextLink} href={"https://github.com/NewCastile"}>
-            NewCastile
-          </ChakraLink>
-        </Text>
-        <GithubIcon />
-      </HStack>
-    </VStack>
+          <NextLink
+            className={"flex flex-row items-center justify-center space-x-2"}
+            href={"https://github.com/NewCastile"}
+          >
+            <span>NewCastile</span>
+            <span className={"inline-block align-top"}>
+              <GithubIcon />
+            </span>
+          </NextLink>
+        </p>
+      </div>
+    </div>
   );
 };
 

@@ -13,6 +13,7 @@
 		"plugin:import/recommended",
 		"plugin:import/typescript",
 		"plugin:prettier/recommended",
+		"plugin:tailwindcss/recommended",
 		"next"
 	],
 	"overrides": [

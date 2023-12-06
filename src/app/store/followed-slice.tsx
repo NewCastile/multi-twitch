@@ -1,4 +1,3 @@
-"use client";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { FOLLOWED_ITEMS_PER_PAGE } from "@/app/constants";

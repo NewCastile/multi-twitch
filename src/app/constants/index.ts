@@ -3,6 +3,7 @@ import { FlatErrorEntrie } from "@/app/types";
 export const MAX_BROADCASTS_NUMBER = 9;
 export const FOLLOWED_ITEMS_PER_PAGE = 7;
 export const SEARCH_ITEMS_PER_PAGE = 20;
+export const DEFAULT_ICON_SIZE = "1rem";
 
 export const INITIAL_PAGE_ROUTE = "/watch/knekro/alimentacionchino/jujalag/zackrawrr/werlyb";
 

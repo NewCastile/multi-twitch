@@ -1,8 +1,8 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
-import { CloseIcon } from "@chakra-ui/icons";
-import { Button, Grid, GridItem, HStack, Text, VStack, useOutsideClick } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 
+import { CloseIcon } from "@/app/_components/icons/close-icon";
 import ExitFullScreenIcon from "@/app/_components/icons/exit-fullscreen-icon";
 import FullScreenIcon from "@/app/_components/icons/fullscreen-icon";
 import useSelectBroadcasts from "@/app/hooks/use-select-broadcasts";
@@ -50,8 +50,6 @@ const StreamsGrid = () => {
 
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick({ ref: gridRef, handler: closeSelect });
-
   const [listItems, setListItems] = useState<Array<StreamsGridItem>>(() =>
     broadcasts.map((b) => ({ ...b, isMaximized: false })),
   );
@@ -79,31 +77,27 @@ const StreamsGrid = () => {
   return (
     <>
       {broadcasts && (
-        <VStack
+        <div
           ref={gridRef}
-          align={"start"}
-          className={"streams-grid"}
-          h={"max"}
-          justify={"center"}
-          w={"80vw"}
+          className={"flex h-max w-[80vw] flex-col items-start justify-center space-y-4"}
         >
-          <HStack justifyContent={"space-between"} pr={"4"} w={"full"}>
-            <HStack spacing={"6"}>
+          <div className={"flex w-full flex-row items-center justify-between pr-4"}>
+            <div className={"flex flex-row items-center justify-center space-x-6"}>
               <SearchDrawer />
               <FollowedDrawer />
-            </HStack>
-            {isSelecting && selectedBroadcasts.length && (
-              <HStack>
-                <CancelSelectController size={"30px"} onClick={closeSelect}>
-                  <CloseIcon boxSize={"0.8em"} />
+            </div>
+            {isSelecting && selectedBroadcasts.length > 0 && (
+              <div className={"flex flex-row items-center justify-center space-x-2"}>
+                <CancelSelectController onClick={closeSelect}>
+                  <CloseIcon size={"10px"} />
                 </CancelSelectController>
-                <ConfirmSelectController href={newUrl} size={"30px"}>
-                  <ConfirmSelectControllerIcon boxSize={"0.8em"} selectAction={selectAction} />
+                <ConfirmSelectController href={newUrl}>
+                  <ConfirmSelectControllerIcon selectAction={selectAction} size={"12px"} />
                 </ConfirmSelectController>
-              </HStack>
+              </div>
             )}
-          </HStack>
-          <Grid gap={"4"} pr={"4"} templateColumns={"repeat(2, minmax(330px, 1fr))"} w={"full"}>
+          </div>
+          <div className={"grid w-full grid-cols-2 gap-4 pr-4"}>
             {listItems.map((broadcaster, broadcasterIdx) => {
               const { broadcaster_login } = broadcaster;
               const isSelected = getIsSelected({
@@ -117,8 +111,8 @@ const StreamsGrid = () => {
                 />
               );
             })}
-          </Grid>
-        </VStack>
+          </div>
+        </div>
       )}
     </>
   );
@@ -134,39 +128,42 @@ const BroadcasterStreamCard = ({
   const { broadcaster_login, broadcaster_name, isMaximized } = broadcaster;
 
   return (
-    <GridItem colSpan={isMaximized ? 2 : 1}>
-      <VStack bg={"monokai.bg_secondary"} p={"2"} w={"full"}>
-        <HStack justify={"space-between"} px={"2"} w={"full"}>
-          <HStack>
+    <div
+      className={`flex flex-col items-center justify-center ${
+        isMaximized ? "col-span-2" : "col-span-1"
+      }`}
+    >
+      <div
+        className={
+          "flex w-full flex-col items-center justify-center space-y-3 bg-monokai-bg-secondary p-3"
+        }
+      >
+        <div className={"flex w-full flex-row items-center justify-between px-2"}>
+          <div className={"flex flex-row items-center justify-center space-x-2"}>
             <SelectBroadcastButton
-              {...{ isSelected, size: "xs", onClickHandler: () => onSelect({ broadcaster }) }}
+              {...{ isSelected, onClickHandler: () => onSelect({ broadcaster }) }}
             />
-            <Text
-              borderBottom={"4px"}
-              borderBottomColor={"monokai.violet.primary"}
-              casing={"uppercase"}
-              fontWeight={"bold"}
-              maxW={"19ch"}
-              w={"max"}
+            <p
+              className={
+                "w-max max-w-[19ch] border-b-4 border-b-monokai-violet-primary font-bold uppercase"
+              }
             >
               {broadcaster_name ?? broadcaster_login}
-            </Text>
-          </HStack>
-          <HStack color={"whiteAlpha.700"}>
-            <Button
-              colorScheme={"whiteAlpha"}
-              size={"sm"}
-              variant={"ghost"}
-              onClick={() => onFullScreen(index)}
-            >
+            </p>
+          </div>
+          <div
+            className={"flex flex-row items-center justify-center space-x-6"}
+            color={"whiteAlpha.700"}
+          >
+            <button onClick={() => onFullScreen(index)}>
               {isMaximized ? <ExitFullScreenIcon /> : <FullScreenIcon />}
-            </Button>
+            </button>
             <RemoveBroadcastLink broadcasterLogin={broadcaster_login} />
-          </HStack>
-        </HStack>
-        <TwitchPlayer broadcasterLogin={broadcaster_login} height={isMaximized ? "400px" : null} />;
-      </VStack>
-    </GridItem>
+          </div>
+        </div>
+        <TwitchPlayer broadcasterLogin={broadcaster_login} height={isMaximized ? "400px" : null} />
+      </div>
+    </div>
   );
 };
 

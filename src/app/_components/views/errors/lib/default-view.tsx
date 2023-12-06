@@ -1,19 +1,18 @@
 "use client";
-import { Text, VStack } from "@chakra-ui/react";
 
 import { ErrorViewComponentProps } from "@/app/types";
 import SignOutButton from "@/app/watch/[[...channels]]/_components/sign-out-button";
 
 const DefaultView = ({ message, status, statusText, children }: ErrorViewComponentProps) => {
   return (
-    <VStack>
-      <Text>
+    <div className={"flex flex-col items-center justify-center"}>
+      <p>
         Error{` ${status}`}: {statusText}
-      </Text>
-      <Text>{message ?? "Sorry... something went wrong :'c"}</Text>
+      </p>
+      <p>{message ?? "Sorry... something went wrong :'c"}</p>
       <SignOutButton />
       {children}
-    </VStack>
+    </div>
   );
 };
 

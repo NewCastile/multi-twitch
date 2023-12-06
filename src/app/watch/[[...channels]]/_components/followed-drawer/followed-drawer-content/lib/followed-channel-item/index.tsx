@@ -1,5 +1,4 @@
 "use client";
-import { HStack, Text, VStack } from "@chakra-ui/react";
 
 import { FollowedChannelItemProps } from "@/app/types";
 
@@ -15,22 +14,20 @@ const FollowedChannelItem = ({
   onClickHandler,
 }: FollowedChannelItemProps) => {
   return (
-    <HStack align={"center"} as={"li"} justify={"space-between"} w={"full"}>
-      <VStack align={"left"} justify={"center"} w={"full"}>
-        <HStack justify={"start"} w={"full"}>
-          {!isOnScreen && <SelectBroadcastButton {...{ isSelected, onClickHandler, size: "xs" }} />}
-          <Text color={"monokai.yellow"} maxW={"25ch"}>
-            {followedChannel.broadcaster_name}
-          </Text>
-        </HStack>
-        <Text color={"whiteAlpha.400"} fontSize={"xs"} fontWeight={"bold"}>
+    <li className={"flex w-full flex-row items-center justify-between space-x-2 py-4"}>
+      <div className={"flex flex-col items-center justify-center"}>
+        {!isOnScreen && <SelectBroadcastButton {...{ isSelected, onClickHandler }} />}
+      </div>
+      <div className={"flex w-full flex-col items-center justify-start"}>
+        <p className={"w-full text-left text-monokai-yellow"}>{followedChannel.broadcaster_name}</p>
+        <p className={"w-full text-left text-xs font-bold text-gray-400"}>
           follow age: {getFollowAge(followedChannel.followed_at)}
-        </Text>
-      </VStack>
+        </p>
+      </div>
       {!isOnScreen && (
         <AddBroadcastLink iconOnly broadcasterLogin={followedChannel.broadcaster_login} />
       )}
-    </HStack>
+    </li>
   );
 };
 

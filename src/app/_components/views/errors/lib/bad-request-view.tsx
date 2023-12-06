@@ -1,21 +1,20 @@
 "use client";
-import { Text, VStack } from "@chakra-ui/react";
 
 import RefreshPageButton from "@/app/_components/refresh-page-button";
 import { ErrorViewComponentProps } from "@/app/types";
 
 const BadRequestView = ({ message, status, statusText }: ErrorViewComponentProps) => {
   return (
-    <VStack>
-      <Text>
+    <div className={"flex flex-col items-center justify-center"}>
+      <p>
         Error{` ${status}`}: {statusText}
-      </Text>
-      <Text>{message}</Text>
-      <VStack>
-        <Text>Try refreshing the page</Text>
+      </p>
+      <p>{message}</p>
+      <div className={"flex flex-col items-center justify-center"}>
+        <p>Try refreshing the page</p>
         <RefreshPageButton />
-      </VStack>
-    </VStack>
+      </div>
+    </div>
   );
 };
 

@@ -1,11 +1,10 @@
 "use client";
-import { Button } from "@chakra-ui/react";
 
 const SearchBackButton = ({ onClickHandler }: { onClickHandler: () => void }) => {
   return (
-    <Button size={"sm"} variant={"monokaiRed"} onClick={onClickHandler}>
+    <button className={"btn-sm btn-monokai-red"} onClick={onClickHandler}>
       Show less
-    </Button>
+    </button>
   );
 };
 

@@ -1,8 +1,7 @@
 "use client";
-import { AddIcon } from "@chakra-ui/icons";
-import { Center, Link as ChakraLink, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 
+import { AddIcon } from "@/app/_components/icons/add-icon";
 import { useAppSelector } from "@/app/store";
 
 const AddBroadcastLink = ({
@@ -23,26 +22,17 @@ const AddBroadcastLink = ({
   if (maxReached || !isNewChannel) return null;
 
   return (
-    <Center
-      _hover={{
-        bg: "whiteAlpha.200",
-        transitionDuration: "0.2s",
-        transitionTimingFunction: "ease-in-out",
-      }}
-      borderRadius={"md"}
-      px={"2"}
-      py={"1"}
-    >
-      <ChakraLink as={NextLink} color={"whiteAlpha.600"} href={linkHref}>
+    <div className={"px-2 py-1"}>
+      <NextLink className={"text-gray-400"} href={linkHref}>
         {iconOnly ? (
           <AddIcon />
         ) : (
-          <Text>
+          <p>
             Add <AddIcon />
-          </Text>
+          </p>
         )}
-      </ChakraLink>
-    </Center>
+      </NextLink>
+    </div>
   );
 };
 

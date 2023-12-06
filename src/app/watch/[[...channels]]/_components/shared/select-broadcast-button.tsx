@@ -1,24 +1,18 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
-
 const SelectBroadcastButton = ({
   isSelected,
-  size,
   onClickHandler,
 }: {
   isSelected: boolean;
   onClickHandler: () => void;
-  size?: ButtonProps["size"];
 }) => {
   return (
-    <Button
-      _hover={{ bg: isSelected ? "monokai.red.primary" : "inherit" }}
-      bg={isSelected ? "monokai.red.primary" : "inherit"}
-      borderColor={"whiteAlpha.400"}
-      borderRadius={"full"}
-      borderWidth={"medium"}
-      colorScheme={"whiteAlpha"}
-      size={size}
-      variant={"ghost"}
+    <button
+      // eslint-disable-next-line tailwindcss/no-custom-classname
+      className={`h-6 w-6 ${
+        isSelected
+          ? "border-monokai-white bg-monokai-red-primary"
+          : "border-monokai-bg-contrast bg-inherit"
+      } rounded-full border-2 `}
       onClick={onClickHandler}
     />
   );

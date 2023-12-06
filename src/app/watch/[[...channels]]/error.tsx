@@ -2,8 +2,6 @@
 
 import { useEffect } from "react";
 
-import { ChakraProviders } from "@/app/providers";
-
 import UnexpectedErrorView from "../../_components/views/errors/lib/unexpected-error";
 export default function Error({
   error,
@@ -19,9 +17,5 @@ export default function Error({
     console.error(error.digest);
   }, [error]);
 
-  return (
-    <ChakraProviders>
-      <UnexpectedErrorView {...{ error, reset }} />
-    </ChakraProviders>
-  );
+  return <UnexpectedErrorView {...{ error, reset }} />;
 }

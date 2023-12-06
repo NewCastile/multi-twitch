@@ -1,49 +1,35 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 "use client";
-import { Grid, GridItem, HStack, Skeleton, VStack } from "@chakra-ui/react";
 
 const LoadingView = () => {
-  const startColor = "monokai.bg";
-  const endColor = "monokai.bg_secondary";
-
   return (
-    <VStack color={"monokai.white"} overflowX={"hidden"} overflowY={"auto"} py={"4"} w={"100vw"}>
-      <HStack align={"start"} justify={"start"} position={"relative"} px={"6"} w={"100vw"}>
-        <VStack align={"start"} className={"streams-grid"} h={"max"} justify={"center"} w={"70vw"}>
-          <HStack justifyContent={"space-between"} pr={"4"} w={"full"}>
-            <HStack spacing={"6"}>
-              <Skeleton endColor={endColor} h={"40px"} startColor={startColor} w={"60px"} />
-              <Skeleton endColor={endColor} h={"40px"} startColor={startColor} w={"60px"} />
-            </HStack>
-            <Skeleton endColor={endColor} h={"40px"} startColor={startColor} w={"60px"} />
-          </HStack>
+    <div
+      className={
+        "flex w-screen animate-pulse flex-col items-center justify-center overflow-y-auto overflow-x-hidden py-4 text-monokai-white"
+      }
+      role={"status"}
+    >
+      <div className={"relative flex w-screen flex-row items-start justify-start px-6"}>
+        <div className={"flex h-max w-[70vw] flex-col items-start justify-center"}>
+          <div className={"flex w-full flex-row items-center justify-between pr-4"}>
+            <div className={"flex flex-row space-x-6"}>
+              <div className={"h-[40px] w-[60px] bg-monokai-bg"} />
+              <div className={"h-[40px] w-[60px] bg-monokai-bg"} />
+            </div>
+            <div className={"h-[40px] w-[60px] bg-monokai-bg"} />
+          </div>
 
-          <Grid gap={"4"} pr={"4"} templateColumns={"repeat(2, minmax(330px, 1fr))"} w={"full"}>
+          <div className={"grid-cols-[repeat(2, minmax(330px, 1fr))] grid w-full gap-4 pr-4"}>
             {Array(5)
               .fill(0)
               .map((_, idx) => {
-                return (
-                  <GridItem key={idx}>
-                    <Skeleton
-                      endColor={endColor}
-                      height={"240px"}
-                      startColor={startColor}
-                      w={"full"}
-                    />
-                  </GridItem>
-                );
+                return <div key={idx} className={"h-[240px] w-full bg-monokai-bg"} />;
               })}
-          </Grid>
-        </VStack>
-        <Skeleton
-          endColor={endColor}
-          h={"600px"}
-          position={"sticky"}
-          startColor={startColor}
-          top={"0"}
-          w={"30vw"}
-        />
-      </HStack>
-    </VStack>
+          </div>
+        </div>
+        <div className={"sticky top-0 h-[600px] w-[30vw] bg-monokai-bg"} />
+      </div>
+    </div>
   );
 };
 

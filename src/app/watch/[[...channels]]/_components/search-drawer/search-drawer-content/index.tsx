@@ -1,7 +1,7 @@
 "use client";
-import { HStack, Spinner, StackDivider, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
+import { SpinnerIcon } from "@/app/_components/icons/spinner-icon";
 import { SEARCH_ITEMS_PER_PAGE } from "@/app/constants";
 import { isSearchChannelsResponse } from "@/app/helpers/type-guards";
 import { useAppDispatch, useAppSelector } from "@/app/store";
@@ -84,8 +84,12 @@ const SearchDrawerContent = () => {
   };
 
   return (
-    <VStack h={"full"} overflowY={"hidden"} spacing={"5"} w={"full"}>
-      <HStack>
+    <div
+      className={
+        "flex h-full w-full flex-col items-center justify-start space-y-5 overflow-y-hidden px-4"
+      }
+    >
+      <div className={"flex flex-row items-center justify-center space-x-2"}>
         <SearchFilterButton
           disabled={isFetching || isLoading}
           isActive={!liveOnly}
@@ -100,7 +104,7 @@ const SearchDrawerContent = () => {
         >
           Live only
         </SearchFilterButton>
-      </HStack>
+      </div>
       <SearchInput
         buttonOnClickHandler={searchButtonOnClickHandler}
         value={value}
@@ -112,40 +116,36 @@ const SearchDrawerContent = () => {
         }}
       />
       {error ? (
-        <Text>An error has ocurred 😕. Please try again or reload the page</Text>
+        <p>An error has ocurred 😕. Please try again or reload the page</p>
       ) : !data ? null : "message" in data ? (
-        <VStack w={"full"}>
-          <Text align={"center"} w={"full"}>
-            Something wrong happened :c
-          </Text>
-          <Text>Try again</Text>
-        </VStack>
+        <div className={"flex w-full flex-col items-center justify-center"}>
+          <p className={"w-full text-center"}>Something wrong happened :c</p>
+          <p>Try again</p>
+        </div>
       ) : (
-        <VStack
-          as={"ul"}
-          divider={<StackDivider borderColor={"whiteAlpha.400"} />}
-          overflowY={"auto"}
-          px={"2"}
-          w={"full"}
+        <ul
+          className={
+            "flex w-full flex-col items-start justify-start divide-y-2 divide-monokai-bg-contrast overflow-y-auto px-2"
+          }
         >
           {shownChannels.map((matchingChannel, matchingChannelIdx) => {
             return (
               <SearchChannelResultItem key={matchingChannelIdx} matchingChannel={matchingChannel} />
             );
           })}
-        </VStack>
+        </ul>
       )}
-      <VStack w={"full"}>
+      <div className={"flex w-full flex-col items-center justify-center"}>
         {isLoading || isFetching ? (
-          <Spinner />
+          <SpinnerIcon />
         ) : pageToken && hasPagination(data) ? (
-          <HStack align={"center"} justify={"space-between"} w={"full"}>
+          <div className={"flex w-full flex-row items-center justify-between"}>
             <SearchNextButton onClickHandler={nextButtonOnClickHandler} />
             {!onFirstPage && <SearchBackButton onClickHandler={() => dispatch(goToPrevPage())} />}
-          </HStack>
+          </div>
         ) : null}
-      </VStack>
-    </VStack>
+      </div>
+    </div>
   );
 };
 

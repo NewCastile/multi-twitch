@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@chakra-ui/react";
 
 const SearchFilterButton = ({
   disabled,
@@ -13,9 +12,13 @@ const SearchFilterButton = ({
   children: React.ReactNode;
 }) => {
   return (
-    <Button disabled={disabled} isActive={isActive} variant={"monokaiRed"} onClick={onClickHandler}>
+    <button
+      className={`btn-sm ${isActive ? "bg-monokai-red-dark" : "btn-monokai-red"}`}
+      disabled={disabled}
+      onClick={onClickHandler}
+    >
       {children}
-    </Button>
+    </button>
   );
 };
 

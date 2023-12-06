@@ -1,6 +1,6 @@
 "use client";
-import { HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
 
+import useTabs from "@/app/hooks/use-tabs";
 import { useAppSelector } from "@/app/store";
 import { BroadcasterBasicInfo } from "@/app/types";
 
@@ -10,55 +10,91 @@ import TwitchChat from "./twitch-chat";
 
 const ChatTabs = () => {
   const broadcasters = useAppSelector((state) => state.broadcasts.broadcasts);
+  const { tabs, tabsElementRef, tabPanelsParentRef } = useTabs({
+    broadcasters,
+    tabsElementId: "chat-tabs",
+  });
 
   return (
     <>
       {broadcasters.length && (
-        <VStack position={"sticky"} top={"0"} w={"30vw"}>
-          <Tabs h={"full"} size={"sm"} variant={"monokai"} w={"full"}>
-            <TabList
-              borderBottomWidth={"medium"}
-              display={"grid"}
-              gap={"2"}
-              gridTemplateColumns={"repeat(3, 1fr)"}
+        <div className={"sticky top-0 flex w-[30vw] flex-col"}>
+          <div
+            className={
+              "flex h-full w-full flex-col items-center justify-center space-y-4 font-mono font-bold"
+            }
+          >
+            <ul
+              ref={tabsElementRef}
+              className={"grid grid-cols-3 gap-2 border-b border-monokai-green-primary"}
+              id={"chat-tabs"}
+              role={"tablist"}
             >
               {broadcasters.map((broadcaster, broadcasterIdx) => {
                 return (
-                  <Tab key={broadcasterIdx}>
-                    <BroadcasterChatTab {...broadcaster} />
-                  </Tab>
+                  <li
+                    key={broadcasterIdx}
+                    className={"flex w-full flex-col items-center justify-center"}
+                    role={"presentation"}
+                  >
+                    <BroadcasterChatTab {...{ ...broadcaster, showTab: tabs?.show }} />
+                  </li>
                 );
               })}
-            </TabList>
-            <TabPanels overflowX={"auto"} overflowY={"hidden"}>
+            </ul>
+            <div
+              ref={tabPanelsParentRef}
+              className={
+                "flex flex-col items-center justify-center overflow-x-auto overflow-y-hidden"
+              }
+              id={"tabs-content"}
+            >
               {broadcasters.map((broadcaster, broadcasterIdx) => {
                 return (
-                  <TabPanel
+                  <div
                     key={broadcasterIdx}
-                    alignItems={"center"}
-                    display={"flex"}
-                    justifyContent={"center"}
+                    aria-labelledby={`${broadcaster.broadcaster_login}-tab`}
+                    className={"flex flex-col items-center justify-center"}
+                    id={`${broadcaster.broadcaster_login}-chat`}
+                    role={"tabpanel"}
                   >
                     <TwitchChat broadcasterLogin={broadcaster.broadcaster_login} />
-                  </TabPanel>
+                  </div>
                 );
               })}
-            </TabPanels>
-          </Tabs>
-        </VStack>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
 };
 
-const BroadcasterChatTab = ({ broadcaster_name, broadcaster_login }: BroadcasterBasicInfo) => {
+const BroadcasterChatTab = ({
+  broadcaster_name,
+  broadcaster_login,
+}: BroadcasterBasicInfo & { showTab?: (tabId: string) => void }) => {
   return (
-    <HStack fontSize={"xs"} spacing={"2"}>
-      <Text cursor={"pointer"} maxW={"18ch"} textTransform={"uppercase"} w={"full"}>
-        {broadcaster_name ?? broadcaster_login}
-      </Text>
-      <RemoveBroadcastLink broadcasterLogin={broadcaster_login} />
-    </HStack>
+    <button
+      aria-controls={`${broadcaster_login}-chat`}
+      aria-selected={"false"}
+      className={"w-full text-xs"}
+      data-tabs-target={`#${broadcaster_login}-chat`}
+      id={`${broadcaster_login}-tab`}
+      role={"tab"}
+      type={"button"}
+      onClick={(e) => {
+        e.preventDefault();
+        // showTab(broadcaster_login);
+      }}
+    >
+      <p className={"w-full cursor-pointer break-words uppercase"}>
+        {broadcaster_name ?? broadcaster_login}{" "}
+        <span className={"inline-block"}>
+          <RemoveBroadcastLink broadcasterLogin={broadcaster_login} size={"0.6rem"} />
+        </span>
+      </p>
+    </button>
   );
 };
 

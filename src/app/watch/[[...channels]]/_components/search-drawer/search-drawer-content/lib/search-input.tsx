@@ -1,7 +1,7 @@
 "use client";
-import { Search2Icon } from "@chakra-ui/icons";
-import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { ChangeEvent, KeyboardEvent } from "react";
+
+import { SearchIcon } from "@/app/_components/icons/search-icon";
 
 const SearchInput = ({
   value,
@@ -15,23 +15,24 @@ const SearchInput = ({
   buttonOnClickHandler: () => void;
 }) => {
   return (
-    <InputGroup size={"sm"} width={"90%"}>
-      <Input
-        _hover={{ borderColor: "blue.600" }}
-        borderColor={"gray.600"}
-        borderRadius={"md"}
-        focusBorderColor={"blue.400"}
-        placeholder={"Search a streamer"}
-        value={value}
-        onChange={(e) => onChangeHandler(e)}
-        onKeyUp={(e) => onKeyUpHandler(e)}
-      />
-      <InputRightElement>
-        <Button size={"xs"} type={"submit"} variant={"link"} onClick={buttonOnClickHandler}>
-          <Search2Icon />
-        </Button>
-      </InputRightElement>
-    </InputGroup>
+    <div className={"flex w-full flex-col items-center justify-center"}>
+      <div className={"relative flex w-max flex-col items-center justify-center"}>
+        <input
+          className={
+            "block w-full rounded-md border-2 border-monokai-bg-contrast bg-inherit px-2 py-1 outline-none placeholder:text-monokai-bg-contrast focus:outline focus:outline-2 focus:outline-monokai-red-light active:outline active:outline-2 active:outline-monokai-red-light"
+          }
+          placeholder={"Search a streamer"}
+          value={value}
+          onChange={(e) => onChangeHandler(e)}
+          onKeyUp={(e) => onKeyUpHandler(e)}
+        />
+        <div className={"absolute right-2 flex items-center"}>
+          <button onClick={buttonOnClickHandler}>
+            <SearchIcon />
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 

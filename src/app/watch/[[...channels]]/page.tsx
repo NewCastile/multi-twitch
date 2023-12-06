@@ -77,6 +77,7 @@ export default async function Watch({ params }: { params: { channels?: string[] 
     return <ErrorView {...followedStreamsResponse} />;
   }
 
+  //
   const emptyArray: Array<FollowedStream | FollowedChannel> = [];
 
   const loginMappedFollowedStreams = followedStreamsResponse.data.map(

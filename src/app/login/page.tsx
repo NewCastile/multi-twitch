@@ -5,7 +5,7 @@ import { getProviders } from "next-auth/react";
 import { INITIAL_PAGE_ROUTE } from "@/app/constants";
 
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import AuthProviders, { ChakraProviders } from "../providers";
+import AuthProviders from "../providers";
 
 import LoginView from "./_components/views";
 
@@ -23,9 +23,7 @@ export default async function Login() {
   } else {
     return providers ? (
       <AuthProviders>
-        <ChakraProviders>
-          <LoginView provider={providers.twitch} />
-        </ChakraProviders>
+        <LoginView provider={providers.twitch} />
       </AuthProviders>
     ) : null;
   }

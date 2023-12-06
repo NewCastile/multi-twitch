@@ -1,14 +1,10 @@
 "use client";
-import { Button } from "@chakra-ui/react";
 import { ClientSafeProvider, signIn } from "next-auth/react";
 
 const SignInButton = ({ provider }: { provider: ClientSafeProvider }) => {
   return (
-    <Button
-      fontSize={"2xl"}
-      mt={"3"}
-      type={"button"}
-      variant={"monokaiViolet"}
+    <button
+      className={"btn-md btn-monokai-violet mt-3 text-2xl"}
       onClick={(e) => {
         e.preventDefault();
         signIn(provider.id, {
@@ -17,7 +13,7 @@ const SignInButton = ({ provider }: { provider: ClientSafeProvider }) => {
       }}
     >
       Twitch
-    </Button>
+    </button>
   );
 };
 

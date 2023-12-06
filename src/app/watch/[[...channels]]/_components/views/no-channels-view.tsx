@@ -1,25 +1,23 @@
 "use client";
-import { HStack, StackDivider, Text, VStack } from "@chakra-ui/react";
 
 import FollowedDrawer from "../followed-drawer";
 import SearchDrawer from "../search-drawer";
 
 const NoChannelsView = () => {
   return (
-    <VStack mt={"10"}>
-      <Text as={"h1"} color={"monokai.bg_contrast"} fontSize={"3xl"} fontWeight={"extrabold"}>
+    <div className={"mt-10"}>
+      <h1 className={"text-3xl font-extrabold text-monokai-bg-contrast"}>
         Look up for some twitch channels c:
-      </Text>
-      <HStack
-        divider={
-          <StackDivider bgColor={"monokai.bg_contrast"} borderColor={"transparent"} width={"3px"} />
+      </h1>
+      <div
+        className={
+          "flex flex-row items-center justify-center space-x-4  divide-x-2 divide-monokai-bg-contrast"
         }
-        spacing={"4"}
       >
         <SearchDrawer />
         <FollowedDrawer />
-      </HStack>
-    </VStack>
+      </div>
+    </div>
   );
 };
 

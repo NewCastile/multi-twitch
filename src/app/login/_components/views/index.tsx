@@ -1,3 +1,5 @@
+"use client";
+
 import { ClientSafeProvider } from "next-auth/react";
 
 import SignInForm from "../sign-in-form";

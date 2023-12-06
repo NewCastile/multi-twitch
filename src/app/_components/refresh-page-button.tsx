@@ -1,21 +1,19 @@
 "use client";
 
-import { Button } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
 const RefreshPageButton = () => {
   const router = useRouter();
 
   return (
-    <Button
-      color={"monokai.bg_contrast"}
-      variant={"monokaiGreen"}
+    <button
+      className={"btn-md btn-monokai-green"}
       onClick={() => {
         router.refresh();
       }}
     >
       Refresh
-    </Button>
+    </button>
   );
 };
 

@@ -1,16 +1,7 @@
 "use client";
-import { CloseIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  HStack,
-  Input,
-  StackDivider,
-  Text,
-  VStack,
-  useOutsideClick,
-} from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
+import { CloseIcon } from "@/app/_components/icons/close-icon";
 import { FOLLOWED_ITEMS_PER_PAGE } from "@/app/constants";
 import { isFollowedChannel } from "@/app/helpers/type-guards";
 import useSearchFollowed from "@/app/hooks/use-search-followed";
@@ -37,10 +28,6 @@ const FollowedDrawerContent = () => {
     selectControlsHandlers: { closeSelect, onSelectHandler },
   } = useSelectBroadcasts({ selectAction: "add" });
 
-  const divRef = useRef<HTMLDivElement>(null);
-
-  useOutsideClick({ ref: divRef, handler: closeSelect });
-
   const [query, setQuery] = useState<string>("");
   const [liveOnly, setLiveOnly] = useState<boolean>(false);
 
@@ -63,9 +50,9 @@ const FollowedDrawerContent = () => {
   };
 
   return (
-    <VStack className={"content"} fontWeight={"bold"} h={"full"} w={"full"}>
-      <VStack w={"full"}>
-        <HStack>
+    <div className={"flex h-full w-full flex-col items-center justify-start px-4 pb-4 font-bold"}>
+      <div className={"flex w-full flex-col items-center justify-center space-y-4"}>
+        <div className={"flex flex-row items-center justify-center space-x-2"}>
           <SearchFilterButton
             disabled={false}
             isActive={!liveOnly}
@@ -80,43 +67,36 @@ const FollowedDrawerContent = () => {
           >
             Live only
           </SearchFilterButton>
-        </HStack>
-        <Text align={"left"} fontSize={"xl"} fontWeight={"black"} w={"full"}>
-          Channels
-        </Text>
-        <Input
-          _hover={{ borderColor: "blue.600" }}
-          borderColor={"gray.600"}
-          borderRadius={"md"}
-          focusBorderColor={"blue.400"}
+        </div>
+        <p className={"w-full text-left text-xl font-black"}>Channels</p>
+        <input
+          className={
+            "block w-full rounded-md border-2 border-monokai-bg-contrast bg-inherit px-2 py-1 outline-none placeholder:text-monokai-bg-contrast focus:outline focus:outline-2 focus:outline-monokai-red-light active:outline active:outline-2 active:outline-monokai-red-light"
+          }
           placeholder={"Search..."}
           onChange={(e) => {
             e.preventDefault();
             setQuery(e.currentTarget.value);
           }}
         />
-      </VStack>
-      <VStack ref={divRef} w={"full"}>
-        <HStack justify={"end"} w={"full"}>
-          {isSelecting && selectedBroadcasts.length && (
+      </div>
+      <div className={"flex w-full flex-col items-center justify-center space-y-4 py-4"}>
+        <div className={"flex w-full flex-row items-center justify-end space-x-2"}>
+          {isSelecting && selectedBroadcasts.length > 0 && (
             <>
               <CancelSelectController onClick={closeSelect}>
-                <CloseIcon boxSize={"0.7em"} />
+                <CloseIcon size={"0.6rem"} />
               </CancelSelectController>
               <ConfirmSelectController href={newUrl}>
-                <ConfirmSelectControllerIcon boxSize={"0.7em"} selectAction={selectAction} />
+                <ConfirmSelectControllerIcon selectAction={selectAction} size={"0.6rem"} />
               </ConfirmSelectController>
             </>
           )}
-        </HStack>
-        <VStack
-          as={"ul"}
-          divider={<StackDivider borderColor={"whiteAlpha.400"} />}
-          h={"full"}
-          mt={"6"}
-          overflowX={"hidden"}
-          overflowY={"auto"}
-          w={"full"}
+        </div>
+        <ul
+          className={
+            "mt-6 flex h-full w-full flex-col items-center justify-center divide-y-2 divide-monokai-bg-contrast overflow-y-auto overflow-x-hidden"
+          }
         >
           {filteredFolloweds.map((followed, followedIdx) => {
             const { broadcaster_login, broadcaster_name } = getFollowedBasicInfo(followed);
@@ -140,23 +120,23 @@ const FollowedDrawerContent = () => {
               />
             );
           })}
-        </VStack>
-        {filteredFolloweds.length && (
-          <HStack align={"center"} justify={"space-between"} w={"full"}>
+        </ul>
+        {filteredFolloweds.length > 0 && (
+          <div className={"flex w-full flex-row items-center justify-between"}>
             {shownFollowed.length < followeds.length && (
-              <Button size={"sm"} variant={"monokaiRed"} onClick={nextPageButtonOnClickHandler}>
+              <button className={"btn-sm btn-monokai-red"} onClick={nextPageButtonOnClickHandler}>
                 Show more
-              </Button>
+              </button>
             )}
             {pageToken > FOLLOWED_ITEMS_PER_PAGE && (
-              <Button size={"sm"} variant={"monokaiRed"} onClick={prevPageButtonOnClickHandler}>
+              <button className={"btn-sm btn-monokai-red"} onClick={prevPageButtonOnClickHandler}>
                 Show less
-              </Button>
+              </button>
             )}
-          </HStack>
+          </div>
         )}
-      </VStack>
-    </VStack>
+      </div>
+    </div>
   );
 };
 

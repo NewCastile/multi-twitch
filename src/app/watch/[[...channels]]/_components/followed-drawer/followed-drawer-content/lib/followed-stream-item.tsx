@@ -1,5 +1,6 @@
 "use client";
-import { Image as ChakraImage, Circle, HStack, Text, VStack } from "@chakra-ui/react";
+
+import NextImage from "next/image";
 
 import { FollowedStreamItemProps } from "@/app/types";
 
@@ -15,35 +16,32 @@ const FollowedStreamItem = ({
   const { thumbnail_url, user_name, user_login, title, game_name } = followedStream;
 
   return (
-    <VStack as={"li"} fontSize={"xs"} fontWeight={"medium"} textTransform={"uppercase"} w={"full"}>
-      <HStack align={"center"} justify={"space-between"} w={"full"}>
-        {!isOnScreen && <SelectBroadcastButton {...{ isSelected, onClickHandler, size: "xs" }} />}
-        <Text
-          casing={"none"}
-          color={"inherit"}
-          fontSize={"sm"}
-          fontWeight={"black"}
-          textAlign={"justify"}
-          w={"full"}
-        >
-          {user_name}
-        </Text>
+    <li
+      className={
+        "flex w-full flex-col items-center justify-center space-y-3 py-4 text-xs font-medium uppercase"
+      }
+    >
+      <div className={"flex w-full flex-row items-center justify-between space-x-2 text-left"}>
+        {!isOnScreen && (
+          <div className={"flex flex-col items-center justify-center"}>
+            <SelectBroadcastButton {...{ isSelected, onClickHandler }} />
+          </div>
+        )}
+        <p className={"w-full text-justify font-black text-inherit"}>{user_name}</p>
         {!isOnScreen && <AddBroadcastLink iconOnly broadcasterLogin={user_login} />}
-      </HStack>
-      <ChakraImage
+      </div>
+      <NextImage
         alt={"profile-picture"}
+        height={112}
         src={thumbnail_url.replace("{width}", "200").replace("{height}", "112")}
+        width={200}
       />
-      <Text color={"monokai.green.primary"} w={"full"}>
-        {title}
-      </Text>
-      <HStack w={"full"}>
-        <Circle bg={"red"} display={"inline-block"} mr={"2"} size={"10px"} />
-        <Text color={"monokai.yellow"} textAlign={"left"} w={"full"}>
-          {game_name}
-        </Text>
-      </HStack>
-    </VStack>
+      <p className={"w-full text-monokai-green-primary"}>{title}</p>
+      <div className={"flex w-full flex-row items-center justify-center"}>
+        <div className={"mr-2 inline-block h-2.5 w-2.5 rounded-full bg-monokai-red-light"} />
+        <p className={"w-full text-left text-monokai-yellow"}>{game_name}</p>
+      </div>
+    </li>
   );
 };
 
