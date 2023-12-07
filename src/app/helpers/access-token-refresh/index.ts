@@ -118,7 +118,7 @@ export const retryTwitchAPIRequest = async <T>({
     method: requestMethod,
     headers: {
       Authorization: `Bearer ${newAccessToken}`,
-      "Client-Id": `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_TWITCH_CLIENT_ID}`,
+      "Client-Id": `${process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID}`,
     },
   });
 
